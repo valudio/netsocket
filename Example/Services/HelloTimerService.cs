@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NetSocket.Sockets;
+using System;
 
 namespace Example.Services
 {

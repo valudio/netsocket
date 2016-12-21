@@ -1,4 +1,5 @@
-﻿
+﻿using NetSocket.Sockets;
+
 namespace Example.Services
 {
     [SocketService(true)]

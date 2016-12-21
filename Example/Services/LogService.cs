@@ -1,4 +1,6 @@
-﻿namespace Example.Services
+﻿using NetSocket.Sockets;
+
+namespace Example.Services
 {
     [SocketService(true)]
     public class LogService : SocketServiceBase

@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using NetSocket.Sockets.Events;
 
-namespace PhoneNotifier.WS.Core.Sockets
+namespace NetSocket.Sockets
 {
     public class SocketManager : IDisposable, ISocketManager
     {

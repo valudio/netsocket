@@ -1,6 +1,4 @@
-﻿using PhoneNotifier.WS.Core.Sockets;
-
-namespace NetSocket.Sockets.Events
+﻿namespace NetSocket.Sockets.Events
 {
     public class SocketSentEventArgs : SocketEventArgs
     {

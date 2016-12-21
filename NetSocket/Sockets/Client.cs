@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.WebSockets;
 
-namespace PhoneNotifier.WS.Core.Sockets
+namespace NetSocket.Sockets
 {
     public class Client : IClient
     {

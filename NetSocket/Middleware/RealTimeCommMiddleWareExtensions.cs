@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Builder;
 using NetSocket.Sockets;
-using PhoneNotifier.WS.Core.Sockets;
 
 namespace NetSocket.Middleware
 {

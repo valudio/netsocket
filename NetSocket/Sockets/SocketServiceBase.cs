@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using NetSocket.Sockets.Events;
 
-namespace PhoneNotifier.WS.Core.Sockets
+namespace NetSocket.Sockets
 {
     public abstract class SocketServiceBase : ISocketService, IDisposable
     {

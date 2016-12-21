@@ -1,5 +1,4 @@
 ﻿using System;
-using PhoneNotifier.WS.Core.Sockets;
 
 namespace NetSocket.Sockets.Events
 {

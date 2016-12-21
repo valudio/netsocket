@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace PhoneNotifier.WS.Core.Sockets
+namespace NetSocket.Sockets
 {
     public interface ISocketService
     {

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-using PhoneNotifier.WS.Core.Sockets;
 
 namespace NetSocket.Sockets
 {

@@ -1,10 +1,10 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using System.Net.WebSockets;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using NetSocket.Sockets.Events;
 
-namespace PhoneNotifier.WS.Core.Sockets
+namespace NetSocket.Sockets
 {
     public interface ISocketManager
     {

@@ -1,4 +1,4 @@
-﻿namespace PhoneNotifier.WS.Core.Sockets
+﻿namespace NetSocket.Sockets
 {
     public interface ISocketServiceLoader
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PhoneNotifier.WS.Core.Sockets
+namespace NetSocket.Sockets
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class SocketServiceAttribute : Attribute

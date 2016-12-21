@@ -1,2 +1,2 @@
 # netsocket
-Small library to easily deal with websockets in .net core
+Small library to easily deal with websockets using .NET Standard

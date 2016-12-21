@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace PhoneNotifier.WS.Core.Sockets
+{
+    public interface ISocketService
+    {
+        Guid Id { get; }
+        void Start();
+        Task SendAllClientsAsync(string message, IClient fromClient = null);
+        Task SendAllClientsExceptAsync(IClient except, string message, IClient fromClient = null);
+        Task SendAllClientsExceptAsync(IEnumerable<IClient> except, string message, IClient fromClient = null);
+        Task SendClientAsync(IClient toClient, string message, IClient fromClient = null);
+        void OnMessageReceived(IClient fromClient, string message);
+        void OnMessageSent(IClient toClient, string message, IClient fromClient);
+        void OnClientInitialized(IClient client);
+        void OnClientClosed(IClient client);
+    }
+}

@@ -173,24 +173,58 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MiddleWare\RealTimeCommMiddleWare.cs" />
-    <Compile Include="MiddleWare\RealTimeCommMiddleWareExtensions.cs" />
+    <Compile Include="..\NetSocket\Middleware\RealTimeCommMiddleWare.cs">
+      <Link>MiddleWare\RealTimeCommMiddleWare.cs</Link>
+    </Compile>
+    <Compile Include="..\NetSocket\Middleware\RealTimeCommMiddleWareExtensions.cs">
+      <Link>MiddleWare\RealTimeCommMiddleWareExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\NetSocket\Sockets\Client.cs">
+      <Link>Sockets\Client.cs</Link>
+    </Compile>
+    <Compile Include="..\NetSocket\Sockets\Events\Delegates.cs">
+      <Link>Sockets\Events\Delegates.cs</Link>
+    </Compile>
+    <Compile Include="..\NetSocket\Sockets\Events\SocketDirection.cs">
+      <Link>Sockets\Events\SocketDirection.cs</Link>
+    </Compile>
+    <Compile Include="..\NetSocket\Sockets\Events\SocketEventArgs.cs">
+      <Link>Sockets\Events\SocketEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\NetSocket\Sockets\Events\SocketReceiveEventArgs.cs">
+      <Link>Sockets\Events\SocketReceiveEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\NetSocket\Sockets\Events\SocketSentEventArgs.cs">
+      <Link>Sockets\Events\SocketSentEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\NetSocket\Sockets\IClient.cs">
+      <Link>Sockets\IClient.cs</Link>
+    </Compile>
+    <Compile Include="..\NetSocket\Sockets\ISocketManager.cs">
+      <Link>Sockets\ISocketManager.cs</Link>
+    </Compile>
+    <Compile Include="..\NetSocket\Sockets\ISocketService.cs">
+      <Link>Sockets\ISocketService.cs</Link>
+    </Compile>
+    <Compile Include="..\NetSocket\Sockets\ISocketServiceLoader.cs">
+      <Link>Sockets\ISocketServiceLoader.cs</Link>
+    </Compile>
+    <Compile Include="..\NetSocket\Sockets\SocketExtensions.cs">
+      <Link>Sockets\SocketExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\NetSocket\Sockets\SocketManager.cs">
+      <Link>Sockets\SocketManager.cs</Link>
+    </Compile>
+    <Compile Include="..\NetSocket\Sockets\SocketServiceAttribute.cs">
+      <Link>Sockets\SocketServiceAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\NetSocket\Sockets\SocketServiceBase.cs">
+      <Link>Sockets\SocketServiceBase.cs</Link>
+    </Compile>
+    <Compile Include="..\NetSocket\Sockets\SocketServiceLoader.cs">
+      <Link>Sockets\SocketServiceLoader.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sockets\Client.cs" />
-    <Compile Include="Sockets\Events\Delegates.cs" />
-    <Compile Include="Sockets\Events\SocketDirection.cs" />
-    <Compile Include="Sockets\Events\SocketEventArgs.cs" />
-    <Compile Include="Sockets\Events\SocketReceiveEventArgs.cs" />
-    <Compile Include="Sockets\Events\SocketSentEventArgs.cs" />
-    <Compile Include="Sockets\IClient.cs" />
-    <Compile Include="Sockets\ISocketManager.cs" />
-    <Compile Include="Sockets\ISocketService.cs" />
-    <Compile Include="Sockets\ISocketServiceLoader.cs" />
-    <Compile Include="Sockets\SocketExtensions.cs" />
-    <Compile Include="Sockets\SocketManager.cs" />
-    <Compile Include="Sockets\SocketServiceAttribute.cs" />
-    <Compile Include="Sockets\SocketServiceBase.cs" />
-    <Compile Include="Sockets\SocketServiceLoader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

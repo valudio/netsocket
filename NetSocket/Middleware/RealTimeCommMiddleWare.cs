@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using NetSocket.Sockets;
 
 namespace NetSocket.Middleware
 {

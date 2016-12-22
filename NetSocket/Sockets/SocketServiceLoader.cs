@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 
 namespace NetSocket.Sockets
@@ -7,11 +8,15 @@ namespace NetSocket.Sockets
     {
         public  void LoadServices(ISocketManager socketManager)
         {
-            var types = GetType().Assembly.GetTypes().Where(t => typeof(ISocketService).IsAssignableFrom(t) && !t.IsAbstract && !t.IsInterface);
+            var asm = Assembly.GetEntryAssembly();
+            var types = asm.GetTypes().Where(t => {
+                var info = t.GetTypeInfo();
+                return !info.IsAbstract && !info.IsInterface && typeof(ISocketService).IsAssignableFrom(t);
+            }); 
             foreach (var type in types)
             {
-                var attr = type.GetCustomAttributes(typeof(SocketServiceAttribute), false).SingleOrDefault();
-                if (attr != null && !((SocketServiceAttribute)attr).Enabled) continue;
+                var attr = type.GetTypeInfo().GetCustomAttribute<SocketServiceAttribute>(false);
+                if (attr != null && !attr.Enabled) continue;
                 var srv = (ISocketService)Activator.CreateInstance(type, socketManager);
                 srv.Start();
             }

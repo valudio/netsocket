@@ -1,6 +1,15 @@
 # netsocket
 Small library to easily deal with websockets using .NET Standard 1.5 or .NET 4.6.2
 
+## How can I consume this?
+For the .NET 4.6.2 version you can use the `Nuget Package`:
+
+```
+PM> Install-Package Valudio.NetSocket.NET
+```
+
+For the `.NET Standard` version, we still no have a `Nuget Package` so you will have to build it yourself.
+
 ## How does it work?
 This library comes with a `middleware` that you can use in your `Startup.cs` file:
 

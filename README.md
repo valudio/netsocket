@@ -1,5 +1,5 @@
 # netsocket
-Small library to easily deal with websockets using .NET Standard
+Small library to easily deal with websockets using .NET Standard 1.5 or .NET 4.6.2
 
 ## How does it work?
 This library comes with a `middleware` that you can use in your `Startup.cs` file:
@@ -83,3 +83,5 @@ Take a look at [library's SocketServiceLoader implementation](https://github.com
 
 ## How to test this
 Run one of the example projects and then use [Simple Web Socket Client for Chrome](https://chrome.google.com/webstore/detail/simple-websocket-client/pfdhoblngboilpfeibdedpjgfnlcodoo), for instance, in order to setup a websocket connection.
+
+Alternatively, if you don't want to run the examples, you can use this url [ws://examplenetsocketnetcore.azurewebsites.net](ws://examplenetsocketnetcore.azurewebsites.net). Bear in mind this is a **F1 free Azure Machine** so it will have to start-up first. Stay calm if first request takes longer than it should. ;D

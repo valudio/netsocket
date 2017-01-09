@@ -72,7 +72,7 @@ public class HelloTimerService : SocketServiceBase
 ## Creating your own SocketServiceLoader
 The library will load all the classes extending `ServiceSocketBase` and not marked with the `ServiceSocketAttribute` set to `false`.
 
-If you want to change this behavior and inject some specific services you can do it by injecting your own `SocketServiceLoader` into the provided `middleware`. This way you could load your `mocked services` if you needed for your tests.
+If you want to change this behavior and inject some specific services you can do it by injecting your own `SocketServiceLoader` into the provided `middleware`. This way you could load your `mocked services` if you need it for your tests.
 
 In order to create a `SocketServiceLoader` all you've got to do is to implement the `ISocketServiceLoader` interface, which is pretty simple:
 

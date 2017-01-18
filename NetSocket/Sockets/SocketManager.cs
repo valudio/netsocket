@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Primitives;
 using NetSocket.Sockets.Events;
 
 namespace NetSocket.Sockets
@@ -20,9 +21,9 @@ namespace NetSocket.Sockets
         public event SocketReceiveEventHandler OnMessage;
         public event SocketSentEventHandler OnSend;
 
-        public async Task AddClientAsync(WebSocket ws, IPAddress ip)
+        public async Task AddClientAsync(WebSocket ws, IPAddress ip, Dictionary<string, StringValues> additionalParameters)
         {
-            var client = new Client(ws, ip);
+            var client = new Client(ws, ip, additionalParameters);
             await Task.Run(async () =>
             {
                 await ListeningLoopAsync(client);

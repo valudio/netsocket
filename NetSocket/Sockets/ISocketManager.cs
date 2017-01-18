@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.WebSockets;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Primitives;
 using NetSocket.Sockets.Events;
 
 namespace NetSocket.Sockets
@@ -13,7 +14,7 @@ namespace NetSocket.Sockets
         event SocketReceiveEventHandler OnMessage;
         event SocketSentEventHandler OnSend;
         List<IClient> Clients { get;} 
-        Task AddClientAsync(WebSocket ws, IPAddress ip);
+        Task AddClientAsync(WebSocket ws, IPAddress ip, Dictionary<string, StringValues> additionalParameters);
         Task SendAsync(IClient toClient, string message, IClient fromClient = null);
     }
 }

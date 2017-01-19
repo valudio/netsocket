@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Primitives;
 using NetSocket.Sockets;
 
 namespace NetSocket.Middleware
@@ -23,8 +26,14 @@ namespace NetSocket.Middleware
         {
             if (context.WebSockets.IsWebSocketRequest)
             {
+                var additionalParameters = new Dictionary<string, StringValues>();
+                if (context.Request.QueryString.HasValue)
+                {
+                    var queryString = context.Request.QueryString.Value;
+                    additionalParameters = QueryHelpers.ParseQuery(queryString);
+                }
                 var ws = await context.WebSockets.AcceptWebSocketAsync();
-                await _socketManager.AddClientAsync(ws, context.Connection.RemoteIpAddress);
+                await _socketManager.AddClientAsync(ws, context.Connection.RemoteIpAddress, additionalParameters);
             }
             else
             {

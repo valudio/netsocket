@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Valudio.NetSocket.NETStandard</id>
+    <version>1.1.0</version>
+    <authors>Valudio</authors>
+    <owners>Valudio</owners>
+    <licenseUrl>https://github.com/valudio/netsocket/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/valudio/netsocket/</projectUrl>
+    <iconUrl>http://fernetjs.com/wp-content/uploads/2012/11/ws_logo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Small library to easily deal with websockets using .NET Standard.</description>
+    <releaseNotes>First distribution.</releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>Websocket .NET .NETCore Core .NETStandard</tags>
+    <dependencies>
+      <dependency id="Microsoft.AspNetCore.WebSockets.Server" version="0.1.0" />
+      <dependency id="NETStandard.Library" version="1.6.1" />
+      <dependency id="Newtonsoft.Json" version="9.0.1" />
+      <dependency id="System.Net.WebSockets" version="4.3.0" />
+      <dependency id="System.Reflection" version="4.3.0" />
+      <dependency id="System.Reflection.Context" version="4.3.0" />
+      <dependency id="System.Reflection.Extensions" version="4.3.0" />
+      <dependency id="System.Reflection.Primitives" version="4.3.0" />
+      <dependency id="System.Reflection.TypeExtensions" version="4.3.0" />
+    </dependencies>
+  </metadata>
+</package>

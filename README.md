@@ -93,14 +93,14 @@ Take a look at [library's SocketServiceLoader implementation](https://github.com
 
 ## Sending additional parameters to the server
 
-If you want to send custom data in the connection you can add in the url as a query string.
+If you want to send custom data through the socket connection you can add it to the url as a query string
 
 ```js
 var url = "ws://domain.com/ws?param1=value&param2=value";
 var socket = new WebSocket(url);
 ```
 
-In the `Client` object you will receives that data in the property `AdditionalParameters` as a `Dictionary<string, StringValues>`
+In the `Client` object you will receive that data in the property `AdditionalParameters` as a `Dictionary<string, StringValues>`
 
 ## How to test this
 Run one of the example projects and then use [Simple Web Socket Client for Chrome](https://chrome.google.com/webstore/detail/simple-websocket-client/pfdhoblngboilpfeibdedpjgfnlcodoo), for instance, in order to setup a websocket connection.

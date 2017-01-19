@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.5</TargetFramework>
     <PackageId>Valudio.NetSocket.NETStandard</PackageId>
-    <PackageVersion>1.0.0</PackageVersion>
+    <PackageVersion>1.1.0</PackageVersion>
     <Authors>Valudio</Authors>
     <Description>Small library to easily deal with websockets using .NET Standard</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>

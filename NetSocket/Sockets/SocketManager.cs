@@ -9,7 +9,7 @@ using NetSocket.Sockets.Events;
 
 namespace NetSocket.Sockets
 {
-    public class SocketManager : IDisposable, ISocketManager
+    internal class SocketManager : IDisposable, ISocketManager
     {
         // TODO take care of locks while accessing the client list
         private static readonly List<IClient> _clients = new List<IClient>();

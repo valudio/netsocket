@@ -1,24 +1,20 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
+﻿using System.Collections.Generic;
 
 namespace NetSocket.Sockets
 {
     public class SocketServiceLoader : ISocketServiceLoader
     {
-        public  void LoadServices(ISocketManager socketManager)
+        private readonly IEnumerable<ISocketService> _services;
+        public SocketServiceLoader(IEnumerable<ISocketService> services)
         {
-            var asm = Assembly.GetEntryAssembly();
-            var types = asm.GetTypes().Where(t => {
-                var info = t.GetTypeInfo();
-                return !info.IsAbstract && !info.IsInterface && typeof(ISocketService).IsAssignableFrom(t);
-            }); 
-            foreach (var type in types)
+            _services = services;
+        }
+
+        public void LoadServices(ISocketManager socketManager)
+        {
+            foreach (var service in _services)
             {
-                var attr = type.GetTypeInfo().GetCustomAttribute<SocketServiceAttribute>(false);
-                if (attr != null && !attr.Enabled) continue;
-                var srv = (ISocketService)Activator.CreateInstance(type, socketManager);
-                srv.Start();
+                service.Start(socketManager);
             }
         }
     }

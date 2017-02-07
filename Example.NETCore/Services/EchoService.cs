@@ -5,7 +5,7 @@ namespace Example.NETCore.Services
     [SocketService(true)]
     public class EchoService : SocketServiceBase
     {
-        public EchoService(ISocketManager manager) : base(manager) { }
+        public EchoService() : base() { }
 
         public override async void OnMessageReceived(IClient fromClient, string message)
         {

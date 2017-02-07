@@ -5,7 +5,7 @@ namespace Example.NETCore.Services
     [SocketService(true)]
     public class LogService : SocketServiceBase
     {
-        public LogService(ISocketManager manager) : base(manager) { }
+        public LogService() : base() { }
 
         public override async void OnClientInitialized(IClient client)
         {

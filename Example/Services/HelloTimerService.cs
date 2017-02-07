@@ -6,7 +6,7 @@ namespace Example.Services
     [SocketService(false)]
     public class HelloTimerService : SocketServiceBase
     {
-        public HelloTimerService(ISocketManager manager) : base(manager)
+        public HelloTimerService() : base()
         {
             var timer = new System.Timers.Timer(60000);
             timer.Elapsed += Timer_Elapsed;

@@ -6,7 +6,7 @@ namespace Example.NETCore.Services
     [SocketService(true)]
     public class HelloTimerService : SocketServiceBase
     {
-        public HelloTimerService(ISocketManager manager) : base(manager)
+        public HelloTimerService() : base()
         {
             var timer = new System.Threading.Timer(async (o) =>
             {

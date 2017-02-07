@@ -15,10 +15,16 @@ PM> Install-Package Valudio.NetSocket.NETStandard
 This library comes with a `middleware` that you can use in your `Startup.cs` file:
 
 ```cs
+
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddRealTimeComm(); // this will inject all the services
+}
+
 public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
 {
     loggerFactory.AddConsole();
-    app.UseRealTimeComm();
+    app.UseRealTimeComm(); // this will start listening
     if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 }
 ```
@@ -69,38 +75,16 @@ public class HelloTimerService : SocketServiceBase
 }
 ```
 
-## Creating your own SocketServiceLoader
-The library will load all the classes extending `ServiceSocketBase` and not marked with the `ServiceSocketAttribute` set to `false`.
-
-If you want to change this behavior and inject some specific services you can do it by injecting your own `SocketServiceLoader` into the provided `middleware`. This way you could load your `mocked services` if you need it for your tests.
-
-In order to create a `SocketServiceLoader` all you've got to do is to implement the `ISocketServiceLoader` interface, which is pretty simple:
-
-```cs
-public interface ISocketServiceLoader
-{
-    void LoadServices(ISocketManager socketManager);
-}
-```
-
-and once you've got this, pass an instance of your newly created class to the middleware as a parameter:
-
-```cs
-app.UseRealTimeComm(yourSocketServiceLoaderInstance);
-```
-
-Take a look at [library's SocketServiceLoader implementation](https://github.com/valudio/netsocket/blob/master/NetSocket/Sockets/SocketServiceLoader.cs) so you get a sense of what you could do.
-
 ## Sending additional parameters to the server
 
-If you want to send custom data through the socket connection you can add it to the url as a query string
+If you want to send additional custom data through the socket connection you can add it to the url as a query string
 
 ```js
 var url = "ws://domain.com/ws?param1=value&param2=value";
 var socket = new WebSocket(url);
 ```
 
-In the `Client` object you will receive that data in the property `AdditionalParameters` as a `Dictionary<string, StringValues>`
+You will receive that data in the property `AdditionalParameters` as a `Dictionary<string, StringValues>` in the `IClient` passed as a parameter to the `virtual methods` of your `SocketServices`
 
 ## How to test this
 Run one of the example projects and then use [Simple Web Socket Client for Chrome](https://chrome.google.com/webstore/detail/simple-websocket-client/pfdhoblngboilpfeibdedpjgfnlcodoo), for instance, in order to setup a websocket connection.

@@ -9,17 +9,17 @@ namespace NetSocket.Sockets
     public abstract class SocketServiceBase : ISocketService, IDisposable
     {
         private bool _isStarted;
-        private ISocketManager Manager { get; }
+        private ISocketManager Manager { get; set; }
         public Guid Id { get; }
-        protected SocketServiceBase(ISocketManager manager)
+        protected SocketServiceBase()
         {
-            Manager = manager;
             Id = Guid.NewGuid();
         }
 
-        public void Start()
+        public void Start(ISocketManager manager)
         {
             if (_isStarted) return;
+            Manager = manager;
             Manager.OnInit += Manager_OnInit;
             Manager.OnMessage += Manager_OnMessage;
             Manager.OnSend += Manager_OnSend;

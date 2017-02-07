@@ -7,7 +7,7 @@ namespace NetSocket.Sockets
     public interface ISocketService
     {
         Guid Id { get; }
-        void Start();
+        void Start(ISocketManager manager);
         Task SendAllClientsAsync(string message, IClient fromClient = null);
         Task SendAllClientsExceptAsync(IClient except, string message, IClient fromClient = null);
         Task SendAllClientsExceptAsync(IEnumerable<IClient> except, string message, IClient fromClient = null);

@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Valudio.NetSocket.NETStandard</id>
-    <version>1.1.0</version>
+    <version>2.0.0</version>
     <authors>Valudio</authors>
     <owners>Valudio</owners>
     <licenseUrl>https://github.com/valudio/netsocket/blob/master/LICENSE</licenseUrl>
@@ -10,8 +10,8 @@
     <iconUrl>http://fernetjs.com/wp-content/uploads/2012/11/ws_logo.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Small library to easily deal with websockets using .NET Standard.</description>
-    <releaseNotes>First distribution.</releaseNotes>
-    <copyright>Copyright 2016</copyright>
+    <releaseNotes>DI service discovery.</releaseNotes>
+    <copyright>Copyright 2017</copyright>
     <tags>Websocket .NET .NETCore Core .NETStandard</tags>
     <dependencies>
       <dependency id="Microsoft.AspNetCore.WebSockets.Server" version="0.1.0" />

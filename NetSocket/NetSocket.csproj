@@ -7,7 +7,7 @@
     <Description>Small library to easily deal with websockets using .NET Standard</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes>First release</PackageReleaseNotes>
-    <Copyright>Copyright 2016 (c) Valudio. All rights reserved.</Copyright>
+    <Copyright>Copyright 2017 (c) Valudio. All rights reserved.</Copyright>
     <PackageTags>Websocket .NETStandard .NETCore .NET Core Standard</PackageTags>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

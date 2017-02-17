@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Valudio.NetSocket.NETStandard</id>
-    <version>2.0.0</version>
+    <version>2.1.1</version>
     <authors>Valudio</authors>
     <owners>Valudio</owners>
     <licenseUrl>https://github.com/valudio/netsocket/blob/master/LICENSE</licenseUrl>

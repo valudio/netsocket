@@ -57,7 +57,6 @@ namespace NetSocket.Sockets
             }
             catch (IOException)
             {
-                var number = 2;
                 // closed connection unexpectly
                 // https://github.com/aspnet/WebSockets/issues/63
             }

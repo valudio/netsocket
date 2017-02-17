@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Echo Example</title>
+
+    <style>
+        html, body, form {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        input {
+            display: block;
+            text-align: center;
+            font-size: 24px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <form id="form">
+        <input id="message" autocomplete="off" />
+        <div id="log">
+
+        </div>
+    </form>
+    <script>
+        (function () {
+            var webSocketProtocol = location.protocol === "https:" ? "wss:" : "ws:";
+            var webSocketUri = webSocketProtocol + "//" + location.host + "/ws";
+
+            var socket = new WebSocket(webSocketUri);
+            var logelement = document.getElementById("log");
+
+            socket.onopen = function () {
+                log("Connected.");
+            };
+
+            socket.onclose = function (event) {
+                if (event.wasClean) {
+                    log('Disconnected.');
+                } else {
+                    log('Connection lost.'); // for example if server processes is killed
+                }
+                log('Code: ' + event.code + '. Reason: ' + event.reason);
+            };
+
+            socket.onmessage = function (event) {
+                log(":> " + event.data);
+            };
+
+            socket.onerror = function (error) {
+                log("Error: " + error.message);
+            };
+
+            var form = document.getElementById('form');
+            var message = document.getElementById('message');
+            form.onsubmit = function () {
+                socket.send(message.value);
+                message.value = '';
+                return false;
+            };
+            function log(message) {
+                logelement.innerHTML += '<span>' + message + '</span><br/>';
+            }
+
+        })();
+    </script>
+</body>
+</html>

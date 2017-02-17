@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.WebSockets;
 using System.Threading;
@@ -43,13 +44,24 @@ namespace NetSocket.Sockets
             var ws = client.WebSocket;
             var buffer = new byte[1024 * 4];
             OnInit?.Invoke(this, new SocketEventArgs(client));
-            var result = await ws.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-            while (!result.CloseStatus.HasValue)
+            try
             {
-                OnMessage?.Invoke(this, new SocketReceiveEventArgs(client, buffer.GetResponse()));
-                result = await ws.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+
+                var result = await ws.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+                while (!result.CloseStatus.HasValue)
+                {
+                    OnMessage?.Invoke(this, new SocketReceiveEventArgs(client, buffer.GetResponse()));
+                    result = await ws.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+                }
+                await ws.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
             }
-            await ws.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
+            catch (IOException)
+            {
+                var number = 2;
+                // closed connection unexpectly
+                // https://github.com/aspnet/WebSockets/issues/63
+            }
+
             OnClose?.Invoke(this, new SocketEventArgs(client));
             RemoveClient(client);
         }

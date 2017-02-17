@@ -19,6 +19,7 @@ namespace Example
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole();
+            app.UseStaticFiles();
             app.UseRealTimeComm();
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
         }

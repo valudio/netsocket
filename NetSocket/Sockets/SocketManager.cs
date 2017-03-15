@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.WebSockets;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Primitives;
@@ -41,28 +42,58 @@ namespace NetSocket.Sockets
         private async Task ListeningLoopAsync(IClient client)
         {
             AddClient(client);
-            var ws = client.WebSocket;
-            var buffer = new byte[1024 * 4];
             OnInit?.Invoke(this, new SocketEventArgs(client));
             try
             {
-
-                var result = await ws.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-                while (!result.CloseStatus.HasValue)
-                {
-                    OnMessage?.Invoke(this, new SocketReceiveEventArgs(client, buffer.GetResponse()));
-                    result = await ws.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-                }
-                await ws.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
+                await ReceiveAsync(client);
             }
             catch (IOException)
             {
-                // closed connection unexpectly
+                // connection unexpectedly closed
                 // https://github.com/aspnet/WebSockets/issues/63
             }
 
             OnClose?.Invoke(this, new SocketEventArgs(client));
             RemoveClient(client);
+        }
+
+
+
+        // https://github.com/Vannevelj/StackSockets/blob/master/StackSockets/Library/StackSocket.cs
+        private async Task ReceiveAsync(IClient client)
+        {
+            const int bufferSize = 1024;
+            const int bufferAmplifier = 4;
+            var temporaryBuffer = new byte[bufferSize];
+            var buffer = new byte[bufferSize * bufferAmplifier];
+            var offset = 0;
+
+            while (client.WebSocket.State == WebSocketState.Open)
+            {
+                WebSocketReceiveResult response;
+
+                do
+                {
+                    response = await client.WebSocket.ReceiveAsync(new ArraySegment<byte>(temporaryBuffer), CancellationToken.None);
+                    temporaryBuffer.CopyTo(buffer, offset);
+                    offset += response.Count;
+                    temporaryBuffer = new byte[bufferSize];
+                } while (!response.EndOfMessage);
+
+                if (response.MessageType == WebSocketMessageType.Close)
+                {
+                    // https://github.com/aspnet/KestrelHttpServer/issues/989
+                    await client.WebSocket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "Close response received", CancellationToken.None);
+                }
+                else
+                {
+                    var result = Encoding.UTF8.GetString(buffer);
+                    OnMessage?.Invoke(this, new SocketReceiveEventArgs(client, result));
+
+                    buffer = new byte[bufferSize * bufferAmplifier];
+                    offset = 0;
+                }
+            }
         }
 
         private void AddClient(IClient client)

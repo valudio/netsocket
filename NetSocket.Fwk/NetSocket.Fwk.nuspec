@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Valudio.NetSocket.NET</id>
-    <version>2.1.1</version>
+    <version>2.1.2</version>
     <title>$title$</title>
     <authors>Valudio</authors>
     <owners>Valudio</owners>
@@ -11,7 +11,7 @@
     <iconUrl>http://fernetjs.com/wp-content/uploads/2012/11/ws_logo.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Small library to easily deal with websockets using .NET</description>
-    <releaseNotes>DI service discovery.</releaseNotes>
+    <releaseNotes></releaseNotes>
     <copyright>Copyright 2017</copyright>
     <tags>Websocket .NET</tags>
   </metadata>

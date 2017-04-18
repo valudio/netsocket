@@ -10,8 +10,8 @@ namespace NetSocket.Sockets
     {
         public WebSocket WebSocket { get; private set; }
         public IPAddress Ip { get; }
-        public Guid Id { get; private set; }
-        public Dictionary<string, StringValues> AdditionalParameters { get; private set; }
+        public Guid Id { get; }
+        public Dictionary<string, StringValues> AdditionalParameters { get; }
 
         public Client(WebSocket webSocket, IPAddress ip, Dictionary<string, StringValues> additionalParameters)
         {
@@ -23,20 +23,23 @@ namespace NetSocket.Sockets
 
         #region [IDisposable]
 
-        private void ReleaseUnmanagedResources()
-        {
-            WebSocket.Dispose();
-        }
 
         public void Dispose()
         {
-            ReleaseUnmanagedResources();
+            Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!disposing || WebSocket == null) return;
+            WebSocket.Dispose();
+            WebSocket = null;
         }
 
         ~Client()
         {
-            ReleaseUnmanagedResources();
+            Dispose(false);
         }
 
         #endregion

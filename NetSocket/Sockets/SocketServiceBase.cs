@@ -98,26 +98,25 @@ namespace NetSocket.Sockets
 
         #region [IDisposable]
 
-        private void ReleaseUnmanagedResources()
-        {
-            if (Manager != null)
-            {
-                Manager.OnInit -= Manager_OnInit;
-                Manager.OnMessage -= Manager_OnMessage;
-                Manager.OnSend -= Manager_OnSend;
-                Manager.OnClose -= Manager_OnClose;
-            }
-        }
-
         public void Dispose()
         {
-            ReleaseUnmanagedResources();
+            Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        public virtual void Dispose(bool disposing)
+        {
+            if (!disposing || Manager == null) return;
+            Manager.OnInit -= Manager_OnInit;
+            Manager.OnMessage -= Manager_OnMessage;
+            Manager.OnSend -= Manager_OnSend;
+            Manager.OnClose -= Manager_OnClose;
+            Manager = null;
         }
 
         ~SocketServiceBase()
         {
-            ReleaseUnmanagedResources();
+            Dispose(false);
         }
 
         #endregion

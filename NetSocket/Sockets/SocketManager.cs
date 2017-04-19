@@ -13,8 +13,7 @@ namespace NetSocket.Sockets
 {
     internal class SocketManager : IDisposable, ISocketManager
     {
-        // TODO take care of locks while accessing the client list
-        private static readonly List<IClient> _clients = new List<IClient>();
+        private static List<IClient> _clients = new List<IClient>();
 
         public List<IClient> Clients => _clients;
 
@@ -56,8 +55,6 @@ namespace NetSocket.Sockets
             OnClose?.Invoke(this, new SocketEventArgs(client));
             RemoveClient(client);
         }
-
-
 
         // https://github.com/Vannevelj/StackSockets/blob/master/StackSockets/Library/StackSocket.cs
         private async Task ReceiveAsync(IClient client)
@@ -114,20 +111,23 @@ namespace NetSocket.Sockets
 
         #region [IDisposable]
 
-        private void ReleaseUnmanagedResources()
-        {
-            // TODO release unmanaged resources here
-        }
 
         public void Dispose()
         {
-            ReleaseUnmanagedResources();
+            Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposing || _clients == null) return;
+            _clients.ForEach(x => x.Dispose());
+            _clients = null;
         }
 
         ~SocketManager()
         {
-            ReleaseUnmanagedResources();
+            Dispose(false);
         }
 
         #endregion

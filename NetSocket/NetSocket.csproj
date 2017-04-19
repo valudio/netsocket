@@ -2,16 +2,16 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.5</TargetFramework>
     <PackageId>Valudio.NetSocket.NETStandard</PackageId>
-    <PackageVersion>2.1.4</PackageVersion>
+    <PackageVersion>2.1.5</PackageVersion>
     <Authors>Valudio</Authors>
     <Description>Small library to easily deal with websockets using .NET Standard</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes></PackageReleaseNotes>
     <Copyright>Copyright 2017 (c) Valudio. All rights reserved.</Copyright>
     <PackageTags>Websocket .NETStandard .NETCore .NET Core Standard</PackageTags>
-    <AssemblyVersion>2.1.4.0</AssemblyVersion>
-    <FileVersion>2.1.4.0</FileVersion>
-    <Version>2.1.4.0</Version>
+    <AssemblyVersion>2.1.5.0</AssemblyVersion>
+    <FileVersion>2.1.5.0</FileVersion>
+    <Version>2.1.5.0</Version>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

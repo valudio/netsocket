@@ -104,7 +104,7 @@ namespace NetSocket.Sockets
             GC.SuppressFinalize(this);
         }
 
-        public virtual void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (!disposing || Manager == null) return;
             Manager.OnInit -= Manager_OnInit;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,6 +12,9 @@ namespace NetSocket.Sockets
         private bool _isStarted;
         private ISocketManager Manager { get; set; }
         public Guid Id { get; }
+
+        public ConcurrentDictionary<Guid, IClient> Clients => Manager?.Clients;
+
         protected SocketServiceBase()
         {
             Id = Guid.NewGuid();
@@ -29,17 +33,17 @@ namespace NetSocket.Sockets
 
         public async Task SendAllClientsAsync(string message, IClient fromClient = null)
         {
-            await SendClientsAsync(Manager.Clients, message, fromClient);
+            await SendClientsAsync(Manager.Clients.Values, message, fromClient);
         }
 
         public async Task SendAllClientsExceptAsync(IClient except, string message, IClient fromClient = null)
         {
-            var clients = Manager.Clients.Where(c => c != except);
+            var clients = Manager.Clients.Values.Where(c => c != except);
             await SendClientsAsync(clients, message, fromClient);
         }
         public async Task SendAllClientsExceptAsync(IEnumerable<IClient> except, string message, IClient fromClient = null)
         {
-            var clients = Manager.Clients.Where(c => !Manager.Clients.Contains(c));
+            var clients = Manager.Clients.Values.Where(c => !Manager.Clients.ContainsKey(c.Id));
             await SendClientsAsync(clients, message, fromClient);
         }
 

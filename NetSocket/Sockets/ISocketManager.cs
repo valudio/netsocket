@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.WebSockets;
 using System.Threading.Tasks;
@@ -13,7 +15,7 @@ namespace NetSocket.Sockets
         event SocketEventHandler OnClose;
         event SocketReceiveEventHandler OnMessage;
         event SocketSentEventHandler OnSend;
-        List<IClient> Clients { get;} 
+        ConcurrentDictionary<Guid, IClient> Clients { get;} 
         Task AddClientAsync(WebSocket ws, IPAddress ip, Dictionary<string, StringValues> additionalParameters);
         Task SendAsync(IClient toClient, string message, IClient fromClient = null);
     }

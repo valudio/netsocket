@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.WebSockets;
 using System.Text;
@@ -14,11 +16,10 @@ namespace NetSocket.Sockets
 {
     internal class SocketManager : IDisposable, ISocketManager
     {
-        private static List<IClient> _clients = new List<IClient>();
         private readonly ILogger<SocketManager> _logger;
         private bool _isDisposed;
 
-        public List<IClient> Clients => _clients;
+        public ConcurrentDictionary<Guid, IClient> Clients { get; private set; } = new ConcurrentDictionary<Guid, IClient>();
 
         public event SocketEventHandler OnInit;
         public event SocketEventHandler OnClose;
@@ -41,7 +42,7 @@ namespace NetSocket.Sockets
 
         public async Task SendAsync(IClient toClient, string message, IClient fromClient)
         {
-            if (toClient.WebSocket.State != WebSocketState.Open) return;
+            if (toClient.WebSocket == null || toClient.WebSocket.State != WebSocketState.Open) return;
             await toClient.WebSocket.SendAsync(message);
             OnSend?.Invoke(this, new SocketSentEventArgs(toClient, fromClient, message));
         }
@@ -58,7 +59,7 @@ namespace NetSocket.Sockets
             {
                 // connection unexpectedly closed
                 // https://github.com/aspnet/WebSockets/issues/63
-                _logger.LogTrace("Client {Id} with {Ip} has been unexpectedly closed", client?.Id, client?.Ip);
+                _logger.LogDebug("Client {Id} with {Ip} has been unexpectedly closed", client?.Id, client?.Ip);
             }
 
             OnClose?.Invoke(this, new SocketEventArgs(client));
@@ -108,20 +109,22 @@ namespace NetSocket.Sockets
             {
                 throw new Exception($"It seems that the SocketManager has been disposed: {_isDisposed}");
             }
-            var sameIdClient = Clients.Find(c => c.Id == client.Id);
-            if (sameIdClient != null)
+            if (Clients.ContainsKey(client.Id))
             {
-                RemoveClient(sameIdClient);
+                RemoveClient(client);
             }
-            Clients.Add(client);
-            _logger.LogTrace("Client {Id} with {Ip} has been connected and added", client.Id, client.Ip);
+            if (!Clients.TryAdd(client.Id, client))
+            {
+                _logger.LogError("Client {Id} with {Ip} has been connected and added", client.Id, client.Ip);
+            }
+            _logger.LogDebug("Client {Id} with {Ip} has been connected and added", client.Id, client.Ip);
         }
 
         private void RemoveClient(IClient client)
         {
-            var isRemoved = client == null || Clients.Remove(client);
+            var isRemoved = client == null || Clients.TryRemove(client.Id, out client);
             if (isRemoved) client?.Dispose();
-            _logger.LogTrace("Client {Id} with {Ip} has been disconnected and removed", client?.Id, client?.Ip);
+            _logger.LogDebug("Client {Id} with {Ip} has been disconnected and removed", client?.Id, client?.Ip);
         }
 
         #region [IDisposable]
@@ -135,11 +138,12 @@ namespace NetSocket.Sockets
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposing || _clients == null || _isDisposed) return;
-            _clients.ForEach(x => x.Dispose());
-            _clients = null;
+            if (!disposing || Clients == null || _isDisposed) return;
+            Clients.Values.ToList().ForEach(x => x.Dispose());
+            Clients.Clear();
+            Clients = null;
             _isDisposed = true;
-            _logger.LogInformation("SocketManager has been disposed");
+            _logger.LogDebug("SocketManager has been disposed");
         }
 
         ~SocketManager()

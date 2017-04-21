@@ -2,16 +2,16 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.5</TargetFramework>
     <PackageId>Valudio.NetSocket.NETStandard</PackageId>
-    <PackageVersion>2.1.6</PackageVersion>
+    <PackageVersion>2.1.7</PackageVersion>
     <Authors>Valudio</Authors>
     <Description>Small library to easily deal with websockets using .NET Standard</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes></PackageReleaseNotes>
     <Copyright>Copyright 2017 (c) Valudio. All rights reserved.</Copyright>
     <PackageTags>Websocket .NETStandard .NETCore .NET Core Standard</PackageTags>
-    <AssemblyVersion>2.1.6.0</AssemblyVersion>
-    <FileVersion>2.1.6.0</FileVersion>
-    <Version>2.1.6.0</Version>
+    <AssemblyVersion>2.1.7.0</AssemblyVersion>
+    <FileVersion>2.1.7.0</FileVersion>
+    <Version>2.1.7.0</Version>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -23,6 +23,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.WebSockets.Server" Version="0.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="1.1.1" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
     <PackageReference Include="System.Net.WebSockets" Version="4.3.0" />
     <PackageReference Include="System.Reflection" Version="4.3.0" />

@@ -11,8 +11,16 @@ namespace NetSocket.Sockets
     {
         public static async Task SendAsync(this WebSocket ws, string message)
         {
-            await ws.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(message)), WebSocketMessageType.Text,
-                        true, CancellationToken.None);
+            try
+            {
+                await ws.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(message)), WebSocketMessageType.Text,
+                    true, CancellationToken.None);
+            }
+            catch (Exception)
+            {
+                //swallow this, most probable cause is a disposed client by another thread.
+            }
+            
         }
 
         public static string GetResponse(this byte[] buffer)

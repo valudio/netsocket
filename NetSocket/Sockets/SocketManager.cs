@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.WebSockets;
@@ -42,9 +41,18 @@ namespace NetSocket.Sockets
 
         public async Task SendAsync(IClient toClient, string message, IClient fromClient)
         {
-            if (toClient.WebSocket == null || toClient.WebSocket.State != WebSocketState.Open) return;
-            await toClient.WebSocket.SendAsync(message);
-            OnSend?.Invoke(this, new SocketSentEventArgs(toClient, fromClient, message));
+            try
+            {
+                if (toClient?.WebSocket == null || toClient.WebSocket.State != WebSocketState.Open) return;
+                await toClient.WebSocket.SendAsync(message);
+                OnSend?.Invoke(this, new SocketSentEventArgs(toClient, fromClient, message));
+            }
+            catch (Exception e)
+            {
+                // most probable cause is a secondary thread disposing the client and the websocket before sending the message
+               _logger.LogDebug($"Message to {toClient?.Id} from  {fromClient?.Id} has not been sent: {e}");
+            }
+           
         }
 
         private async Task ListeningLoopAsync(IClient client)
@@ -55,11 +63,11 @@ namespace NetSocket.Sockets
             {
                 await ReceiveAsync(client);
             }
-            catch (IOException)
+            catch (Exception e)
             {
                 // connection unexpectedly closed
                 // https://github.com/aspnet/WebSockets/issues/63
-                _logger.LogDebug("Client {Id} with {Ip} has been unexpectedly closed", client?.Id, client?.Ip);
+                _logger.LogDebug($"Client {client?.Id} with {client?.Ip} has been unexpectedly closed: {e}");
             }
 
             OnClose?.Invoke(this, new SocketEventArgs(client));

@@ -102,7 +102,7 @@ namespace NetSocket.Sockets
                 }
                 else
                 {
-                    var result = Encoding.UTF8.GetString(buffer);
+                    var result = Encoding.UTF8.GetString(buffer, 0, offset);
                     OnMessage?.Invoke(this, new SocketReceiveEventArgs(client, result));
 
                     buffer = new byte[BUFFER_SIZE * BUFFER_AMPLIFIER];

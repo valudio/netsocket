@@ -82,6 +82,7 @@ namespace NetSocket.Sockets
             var temporaryBuffer = new byte[BUFFER_SIZE];
             var buffer = new byte[BUFFER_SIZE * BUFFER_AMPLIFIER];
             var offset = 0;
+            var bufferIterationCount = 1;
 
             while (client.WebSocket.State == WebSocketState.Open)
             {
@@ -89,10 +90,15 @@ namespace NetSocket.Sockets
 
                 do
                 {
+                    if (bufferIterationCount > BUFFER_AMPLIFIER)
+                    {
+                        Array.Resize(ref buffer, BUFFER_SIZE * bufferIterationCount);
+                    }
                     response = await client.WebSocket.ReceiveAsync(new ArraySegment<byte>(temporaryBuffer), CancellationToken.None);
                     temporaryBuffer.CopyTo(buffer, offset);
                     offset += response.Count;
                     temporaryBuffer = new byte[BUFFER_SIZE];
+                    bufferIterationCount++;
                 } while (!response.EndOfMessage);
 
                 if (response.MessageType == WebSocketMessageType.Close)
@@ -107,6 +113,7 @@ namespace NetSocket.Sockets
 
                     buffer = new byte[BUFFER_SIZE * BUFFER_AMPLIFIER];
                     offset = 0;
+                    bufferIterationCount = 1;
                 }
             }
         }

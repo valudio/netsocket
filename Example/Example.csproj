@@ -6,9 +6,6 @@
     <RuntimeIdentifier>win7-x86</RuntimeIdentifier>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="wwwroot\websocket.html" />
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="Microsoft.CSharp" />

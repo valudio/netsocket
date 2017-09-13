@@ -24,7 +24,7 @@ public void ConfigureServices(IServiceCollection services)
 public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
 {
     loggerFactory.AddConsole();
-    app.UseRealTimeComm(); // this will start listening
+    app.UseRealTimeComm(); // this will start listening (Note that you can pass the ports your application will be listening here)
     if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 }
 ```

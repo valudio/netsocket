@@ -9,12 +9,12 @@ namespace NetSocket.Middleware
 {
     public static class RealTimeCommMiddleWareExtensions
     {
-        public static IApplicationBuilder UseRealTimeComm(this IApplicationBuilder app)
+        public static IApplicationBuilder UseRealTimeComm(this IApplicationBuilder app, params int[] ports)
         {
             if (app == null)
                 throw new ArgumentException("app");
             app.UseWebSockets();
-            return app.UseMiddleware<RealTimeCommMiddleWare>();
+            return app.UseMiddleware<RealTimeCommMiddleWare>(ports);
         }
 
         public static IServiceCollection AddRealTimeComm(this IServiceCollection services)

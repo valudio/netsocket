@@ -5,7 +5,7 @@ You have to follow these steps. You can find more accurate information [here](ht
 1. Check if the `nuspec file` already exists in the root folder. In case it doesn't then:
 
 ``` sh
-nuget spec 
+nuget spec
 ```
 
 1. Open the `nuspec file` and edit what you needed.

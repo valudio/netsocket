@@ -5,7 +5,7 @@ You have to follow these steps. You can find more accurate information [here](ht
 1. Check if the `nuspec file` already exists. It has to be located inside the `nuget folder`. In case it doesn't then:
 
 ``` sh
-nuget spec 
+nuget spec
 ```
 
 1. Open the `nuspec file` and edit what you needed. Don't forget to add the project `dependencies`. You can find this information by opening the `NetSocket.deps.json` file which can be found inside `bin\Release\netstandard1.5`. Take a look at `targets > ... > netsocket, Version=v*.*` and copy the `dependencies` node into your `nuspec` file. Another thing that you have to look at is that no `$*$` is present. You will have to replace this placeholders with actual information.

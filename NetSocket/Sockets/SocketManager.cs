@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.WebSockets;
@@ -50,9 +51,9 @@ namespace NetSocket.Sockets
             catch (Exception e)
             {
                 // most probable cause is a secondary thread disposing the client and the websocket before sending the message
-               _logger.LogDebug($"Message to {toClient?.Id} from  {fromClient?.Id} has not been sent: {e}");
+                _logger.LogDebug($"Message to {toClient?.Id} from  {fromClient?.Id} has not been sent: {e}");
             }
-           
+
         }
 
         private async Task ListeningLoopAsync(IClient client)
@@ -74,32 +75,30 @@ namespace NetSocket.Sockets
             RemoveClient(client);
         }
 
-        // https://github.com/Vannevelj/StackSockets/blob/master/StackSockets/Library/StackSocket.cs
         private async Task ReceiveAsync(IClient client)
         {
-            const int BUFFER_SIZE = 1024;
-            const int BUFFER_AMPLIFIER = 4;
-            var temporaryBuffer = new byte[BUFFER_SIZE];
-            var buffer = new byte[BUFFER_SIZE * BUFFER_AMPLIFIER];
-            var offset = 0;
-            var bufferIterationCount = 1;
-
             while (client.WebSocket.State == WebSocketState.Open)
             {
+                string serializedMessage;
                 WebSocketReceiveResult response;
+                var buffer = new ArraySegment<byte>(new byte[1024 * 4]);
 
-                do
+                using (var ms = new MemoryStream())
                 {
-                    if (bufferIterationCount > BUFFER_AMPLIFIER)
+                    do
                     {
-                        Array.Resize(ref buffer, BUFFER_SIZE * bufferIterationCount);
+                        response = await client.WebSocket.ReceiveAsync(buffer, CancellationToken.None);
+                        ms.Write(buffer.Array, buffer.Offset, response.Count);
                     }
-                    response = await client.WebSocket.ReceiveAsync(new ArraySegment<byte>(temporaryBuffer), CancellationToken.None);
-                    temporaryBuffer.CopyTo(buffer, offset);
-                    offset += response.Count;
-                    temporaryBuffer = new byte[BUFFER_SIZE];
-                    bufferIterationCount++;
-                } while (!response.EndOfMessage);
+                    while (!response.EndOfMessage);
+             
+                    ms.Position = 0;
+                
+                    using (var sr = new StreamReader(ms, Encoding.UTF8))
+                    {
+                        serializedMessage = await sr.ReadToEndAsync();
+                    }
+                }
 
                 if (response.MessageType == WebSocketMessageType.Close)
                 {
@@ -108,12 +107,7 @@ namespace NetSocket.Sockets
                 }
                 else
                 {
-                    var result = Encoding.UTF8.GetString(buffer, 0, offset);
-                    OnMessage?.Invoke(this, new SocketReceiveEventArgs(client, result));
-
-                    buffer = new byte[BUFFER_SIZE * BUFFER_AMPLIFIER];
-                    offset = 0;
-                    bufferIterationCount = 1;
+                    OnMessage?.Invoke(this, new SocketReceiveEventArgs(client, serializedMessage));
                 }
             }
         }

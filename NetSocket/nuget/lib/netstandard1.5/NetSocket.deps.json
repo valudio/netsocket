@@ -7,7 +7,7 @@
   "targets": {
     ".NETStandard,Version=v1.5": {},
     ".NETStandard,Version=v1.5/": {
-      "NetSocket/2.2.3.0": {
+      "NetSocket/2.3.0.0": {
         "dependencies": {
           "Microsoft.AspNetCore.WebSockets.Server": "0.1.0",
           "Microsoft.AspNetCore.WebUtilities": "1.1.1",
@@ -1010,7 +1010,7 @@
     }
   },
   "libraries": {
-    "NetSocket/2.2.3.0": {
+    "NetSocket/2.3.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

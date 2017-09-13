@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.WebUtilities;
@@ -12,10 +13,12 @@ namespace NetSocket.Middleware
     {
         private readonly ISocketManager _socketManager;
         private readonly RequestDelegate _next;
+        private readonly IEnumerable<int> _ports;
 
-        public RealTimeCommMiddleWare(RequestDelegate next, ISocketManager socketManager, ISocketServiceLoader loader)
+        public RealTimeCommMiddleWare(RequestDelegate next, ISocketManager socketManager, ISocketServiceLoader loader, IEnumerable<int> ports)
         {
             _socketManager = socketManager;
+            _ports = ports;
             loader.LoadServices(_socketManager);
             _next = next ?? throw new ArgumentNullException(nameof(next));
         }
@@ -24,7 +27,7 @@ namespace NetSocket.Middleware
         public async Task Invoke(HttpContext context)
 #pragma warning restore IDE1006 // Naming Styles
         {
-            if (context.WebSockets.IsWebSocketRequest)
+            if (context.WebSockets.IsWebSocketRequest && CheckPorts(context))
             {
                 var additionalParameters = new Dictionary<string, StringValues>();
                 if (context.Request.QueryString.HasValue)
@@ -39,6 +42,12 @@ namespace NetSocket.Middleware
             {
                 await _next.Invoke(context);
             }
+        }
+
+        private bool CheckPorts(HttpContext context)
+        {
+            if (!_ports.Any()) return true;
+            return context.Request.Host.Port.HasValue && _ports.Contains(context.Request.Host.Port.Value);
         }
     }
 }

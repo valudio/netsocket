@@ -20,7 +20,7 @@ namespace Example
         {
             loggerFactory.AddConsole();
             app.UseStaticFiles();
-            app.UseRealTimeComm();
+            app.UseRealTimeComm(5001, 23436); //websockets will only be served over port 5001. If you leave this blank all configured ports will be used
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
         }
     }

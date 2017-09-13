@@ -16,6 +16,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.1" />
+    <PackageReference Include="Nuget.CommandLine" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NetSocket\NetSocket.csproj" />

@@ -5,8 +5,6 @@ namespace Example.NETCore.Services
     [SocketService(true)]
     public class LogService : SocketServiceBase
     {
-        public LogService() : base() { }
-
         public override async void OnClientInitialized(IClient client)
         {
             await SendClientAsync(client, $"You're now connected {client.Id}");

@@ -89,4 +89,6 @@ You will receive that data in the property `AdditionalParameters` as a `Dictiona
 ## How to test this
 Run one of the example projects and then use [Simple Web Socket Client for Chrome](https://chrome.google.com/webstore/detail/simple-websocket-client/pfdhoblngboilpfeibdedpjgfnlcodoo), for instance, in order to setup a websocket connection.
 
-Alternatively, if you don't want to run the examples, you can use this url [ws://examplenetsocketnetcore.azurewebsites.net](ws://examplenetsocketnetcore.azurewebsites.net). Bear in mind this is a **F1 free Azure Machine** so it will have to start-up first. Stay calm if first request takes longer than it should. ;D
+Alternatively, if you don't want to run the examples, you can use this url [ws://examplenetsocketnetcore.azurewebsites.net](ws://examplenetsocketnetcore.azurewebsites.net). The website also has a [simple form to test it](http://examplenetsocketnetcore.azurewebsites.net/)
+
+Bear in mind this is a **F1 free Azure Machine** so it will have to start-up first. Stay calm if first request takes longer than it should. ;D

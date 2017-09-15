@@ -1,17 +1,14 @@
 # netsocket
-Small library to easily deal with websockets using .NET Standard 1.5 or .NET 4.6.2
+Small library to easily deal with websockets using .NET Standard 2.0.
 
 ## How can I consume this?
-For the .NET 4.6.2 version you can use the `Nuget Package`:
 
 ```
-# .NET Core
-PM> Install-Package Valudio.NetSocket.NET 
-# .NET Standard
-PM> Install-Package Valudio.NetSocket.NETStandard
+PM> Install-Package Valudio.NetSocket
 ```
 
 ## How does it work?
+
 This library comes with a `middleware` that you can use in your `Startup.cs` file:
 
 ```cs
@@ -56,6 +53,7 @@ Task SendClientAsync(IClient toClient, string message, IClient fromClient = null
 ```
 
 ## Enabling / Disabling SocketServices
+
 Let's say you want to not use one of your `SocketServices` (your classes extending `SocketServiceBase`). You've got the option to mark them with an attribute `SocketServiceAttribute`:
 
 ```cs
@@ -87,6 +85,7 @@ var socket = new WebSocket(url);
 You will receive that data in the property `AdditionalParameters` as a `Dictionary<string, StringValues>` in the `IClient` passed as a parameter to the `virtual methods` of your `SocketServices`
 
 ## How to test this
+
 Run one of the example projects and then use [Simple Web Socket Client for Chrome](https://chrome.google.com/webstore/detail/simple-websocket-client/pfdhoblngboilpfeibdedpjgfnlcodoo), for instance, in order to setup a websocket connection.
 
 Alternatively, if you don't want to run the examples, you can use this url [ws://examplenetsocketnetcore.azurewebsites.net](ws://examplenetsocketnetcore.azurewebsites.net). The website also has a [simple form to test it](http://examplenetsocketnetcore.azurewebsites.net/)

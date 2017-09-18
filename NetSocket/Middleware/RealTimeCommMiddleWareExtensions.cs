@@ -32,8 +32,8 @@ namespace NetSocket.Middleware
                     return !info.IsAbstract && !info.IsInterface && typeof(ISocketService).IsAssignableFrom(t) && (attr == null || attr.Enabled);
                 })
                 .ToList()
-                .ForEach(x => services.AddScoped(typeof(ISocketService), x));
-
+                .ForEach(x => services.AddTransient(typeof(ISocketService), x));
+               
             return services;
         }
     }
